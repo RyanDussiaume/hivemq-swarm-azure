@@ -111,7 +111,7 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2015-06-15",
-            "name": "[variables('vmName-public-ip')]",
+            "name": "[concat(variables('vmName'), '-public-ip')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "publicIPAllocationMethod": "Dynamic"
@@ -146,7 +146,7 @@
             "name": "[variables('nicName')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[variables('vmName-public-ip')]",
+                "[concat(variables('vmName'), '-public-ip')]",
                 "[variables('virtualNetworkName')]"
             ],
             "properties": {
@@ -155,7 +155,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('vmName-public-ip')]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('vmName'), '-public-ip')]"
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
