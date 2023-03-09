@@ -79,7 +79,8 @@
         },
         "storageAccountName": "[toLower(uniqueString(resourceGroup().id) )]",
         "containerName": "[concat('hivemq-cluster-container-', uniqueString( resourceGroup().id, deployment().name ))]",
-        "setupScriptLink": "[concat('https://raw.githubusercontent.com/RyanDussiaume/hivemq-swarm-azure/main/setup_swarm.sh')]"
+        "setupScriptLink": "[concat('https://raw.githubusercontent.com/RyanDussiaume/hivemq-swarm-azure/main/setup_swarm.sh')]",
+        "vmIpName": "vm-public-ip"
     },
     "resources": [
 
@@ -111,7 +112,7 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2015-06-15",
-            "name": "[concat(variables('vmName'), '-public-ip')]",
+            "name": "[variables('vmIpName')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "publicIPAllocationMethod": "Dynamic"
@@ -146,7 +147,7 @@
             "name": "[variables('nicName')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[concat(variables('vmName'), '-public-ip')]",
+                "[variables('vmIpName')]",
                 "[variables('virtualNetworkName')]"
             ],
             "properties": {
@@ -155,7 +156,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('vmName'), '-public-ip')]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('vmIpName'))]"
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
