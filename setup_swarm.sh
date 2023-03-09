@@ -19,6 +19,7 @@ cd /opt/hivemq/tools/hivemq-swarm/config
 echo "<swarm xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
        xsi:noNamespaceSchemaLocation=\"config.xsd\">
     <commander>
+        <mode>rest</mode>
         <agents>
             <agent>
                 <host>localhost</host>
